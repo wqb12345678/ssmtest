@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 读取 -->
+	<properties resource="datebase.properties"/>
+	<!-- <properties resource="datebase.properties">
+		<property name="driver" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/smbms"/>
+		<property name="username" value="root"/>
+		<property name="password" value="123"/>
+	</properties> -->
+	<!-- 设置日志的打印方式 -->
+	<settings>
+		<setting name="logImpl" value="LOG4J"/>
+		<setting name="autoMappingBehavior" value="FULL"/>
+		<!-- PARTIAL自动映射匹配所有属性，内部嵌套除外 -->
+		<!-- <setting name="autoMappingBehavior" value="PARTIAL"/> -->
+		<!-- <setting name="autoMappingBehavior" value="NONE"/> -->
+	</settings>
+    <typeAliases>
+    	<package name="cn.bdqn.sm.pojo"/>
+    </typeAliases>                             
+	<!-- 配置运行环境 -->
+	<environments default="test1">
+		<environment id="test1">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="${Driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${name}"/>
+				<property name="password" value="${password}"/>
+			</dataSource>
+		</environment>
+		
+	</environments>
+	<mappers>
+		<mapper resource="cn/bdqn/sm/dao/UserMapper.xml"/> 
+		<mapper resource="cn/bdqn/sm/dao/role/RoleMapper.xml"/>
+		<mapper resource="cn/bdqn/sm/dao/bill/BillMapper.xml"/>
+		<mapper resource="cn/bdqn/sm/dao/provider/ProviderMapper.xml"/>
+	</mappers>
+</configuration>

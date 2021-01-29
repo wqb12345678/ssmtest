@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="cn.bdqn.sm.dao.bill.BillMapper">
+ 	<select id="getBills" resultMap="getBill">
+ 		SELECT b.*,p.proName FROM smbms_bill b,smbms_provider p WHERE b.providerId=p.id;
+ 	</select>
+ 	<select id="getProviders" resultType="Provider">
+ 		SELECT*FROM smbms_provider
+ 	</select>
+ 	<insert id="billAdd" parameterType="Bill">
+ 		INSERT INTO smbms_bill(billCode,productName,productDesc,productUnit,productCount,totalPrice,isPayment,providerId)
+		VALUES(#{billCode},#{productName},#{productDesc},#{productUnit},#{productCount},#{totalPrice},#{isPayment},#{providerId});
+ 	</insert>
+ 	<delete id="delBill" parameterType="Integer">
+ 		DELETE FROM smbms_bill WHERE id=#{id};
+ 	</delete>
+ 	<resultMap type="Bill" id="getBill">
+ 		<id property="id" column="id"/>
+ 		<result property="providerName" column="proName"/>
+ 	</resultMap>
+ 	<select id="getBillandProName" resultMap="getBill" parameterType="Integer" >
+ 		SELECT b.*,p.proName FROM smbms_bill b,smbms_provider p WHERE b.providerId=p.id AND b.id=#{id};
+ 	</select>
+ 	<select id="getBill" resultType="Bill" parameterType="Integer">
+ 		SELECT*FROM smbms_bill WHERE id=#{id};
+ 	</select>
+ 	<update id="updateBill" parameterType="Bill">
+ 		UPDATE smbms_bill 
+ 		<set><if test="billCode!=null">
+ 		billCode=#{billCode},
+ 		</if><if test="productName!=null">
+ 		productName=#{productName},
+ 		</if><if test="productUnit!=null">
+ 		productUnit=#{productUnit},
+ 		</if><if test="productCount!=null">
+ 		productCount=#{productCount},
+ 		</if><if test="totalPrice!=null">
+ 		totalPrice=#{totalPrice},
+ 		</if><if test="providerId!=null">
+ 		providerId=#{providerId},
+ 		</if><if test="isPayment!=null">
+ 		isPayment=#{isPayment}
+ 		</if></set>
+		WHERE id=#{id}
+ 	</update>
+ </mapper>
